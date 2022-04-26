@@ -13,15 +13,15 @@ function createCustomElement(element, className, innerText) {
 }
 
 function createProductItemElement({ sku, name, image }) {
+  const sectionItens = document.querySelector('.items');
   const section = document.createElement('section');
   section.className = 'item';
-
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
 
-  return section;
+  sectionItens.appendChild(section);
 }
 
 function getSkuFromProductItem(item) {
@@ -40,4 +40,18 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-window.onload = () => { };
+function fecthProductsFor(resultsFunction) {
+  resultsFunction.results.forEach((element) => {
+    const sku = element.id;
+    const name = element.title;
+    const image = element.thumbnail;
+    createProductItemElement({ sku, name, image });
+  });
+}
+async function fetchResults() {
+fecthProductsFor(await fetchProducts('computador'));
+}
+
+window.onload = () => {
+  fetchResults();
+};
