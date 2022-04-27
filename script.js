@@ -12,6 +12,35 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+// function getSkuFromProductItem(item) {
+//   console.log(item.querySelector('span.item__sku').innerText);
+// }
+
+function cartItemClickListener(event) {
+  // console.log('ronaldo');
+  // console.log(event.target);
+  const results = event.target;
+  results.remove();
+}
+function createCartItemElement({ sku, name, salePrice }) {
+  const cart = document.querySelector('.cart__items');
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.addEventListener('click', cartItemClickListener);
+  cart.appendChild(li);
+}
+async function fetchItemResults(parameter) {
+  const results = await fetchItem(parameter);
+  const sku = results.id;
+  const name = results.title;
+  const salePrice = results.price;
+  createCartItemElement({ sku, name, salePrice });
+}
+async function addCartItemClickListener(event) {
+  const itemSelected = event.target.parentNode.children[0].innerText;
+  fetchItemResults(itemSelected); 
+}
 function createProductItemElement({ sku, name, image }) {
   const sectionItens = document.querySelector('.items');
   const section = document.createElement('section');
@@ -22,24 +51,11 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
 
   sectionItens.appendChild(section);
+  const addButton = document.querySelectorAll('.item__add');
+addButton.forEach((item) => {
+  item.addEventListener('click', addCartItemClickListener);
+});
 }
-
-function getSkuFromProductItem(item) {
-  return item.querySelector('span.item__sku').innerText;
-}
-
-function cartItemClickListener(event) {
-  // coloque seu código aqui
-}
-
-function createCartItemElement({ sku, name, salePrice }) {
-  const li = document.createElement('li');
-  li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
-  return li;
-}
-
 function fecthProductsFor(resultsFunction) {
   resultsFunction.results.forEach((element) => {
     const sku = element.id;
