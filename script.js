@@ -60,7 +60,6 @@ function getSaveCartItemsPrincipal() {
   li.forEach((item) => item.addEventListener('click', cartItemClickListener));
 }
 
-
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   // const spanLi = document.createElement('span');
@@ -127,11 +126,11 @@ emptyCart.addEventListener('click', () => {
 });
 
 function loadingCart() {
-  const cart = document.querySelector('.items');
+  const cart2 = document.querySelector('.items');
   const textLoading = document.createElement('p');
   textLoading.classList.add('loading');
   textLoading.textContent = 'carregando...';
-  cart.appendChild(textLoading);
+  cart2.appendChild(textLoading);
 }
 
 window.onload = () => {
