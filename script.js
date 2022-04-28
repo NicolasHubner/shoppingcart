@@ -88,7 +88,12 @@ addButton.forEach((item) => {
   item.addEventListener('click', addCartItemClickListener);
 });
 }
+function removeLoading() {
+  const loading = document.querySelector('.loading');
+  loading.remove();
+}
 function fecthProductsFor(resultsFunction) {
+  removeLoading();
   resultsFunction.results.forEach((element) => {
     const sku = element.id;
     const name = element.title;
@@ -108,7 +113,16 @@ emptyCart.addEventListener('click', () => {
   saveCartItems();
 });
 
+function loadingCart() {
+  const cart = document.querySelector('.items');
+  const textLoading = document.createElement('p');
+  textLoading.classList.add('loading');
+  textLoading.textContent = 'carregando...';
+  cart.appendChild(textLoading);
+}
+
 window.onload = () => {
+  loadingCart();
   fetchResults();
   getSavedCartItems();
   totalPrice();
