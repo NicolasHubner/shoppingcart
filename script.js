@@ -12,26 +12,28 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-// function getSkuFromProductItem(item) {
-//   console.log(item.querySelector('span.item__sku').innerText);
-// }
-
 function calculatePrice() {
   const spamCart = document.querySelectorAll('.total-price');
   spamCart.forEach((item) => item.remove());
+  // let price = 0;
+  // const spamListPrice = document.querySelectorAll('.spanNone');
+  // spamListPrice.forEach((item) => {
+  // price += Number(item.textContent);
+  // });
   let price = 0;
-  const spamListPrice = document.querySelectorAll('.spanNone');
+  const spamListPrice = document.querySelectorAll('.cart__item');
   spamListPrice.forEach((item) => {
-  price += Number(item.textContent);
+    const priceItem = item.innerHTML.split('PRICE: $')[1];
+    price += Number(priceItem);
   });
-  return price.toFixed(2);
+  return price;
 }
 function totalPrice() {
   const sectionCart = document.querySelector('section.cart');
   // console.log(sectionCart);
   const priceTotal = document.createElement('span');
   priceTotal.classList.add('total-price');
-  priceTotal.textContent = `R$${calculatePrice()}`;
+  priceTotal.textContent = `${calculatePrice()}`;
   sectionCart.appendChild(priceTotal);
   // saveCartItems();
 }
@@ -39,6 +41,7 @@ function cartItemClickListener(event) {
   // console.log('ronaldo');
   // console.log(event.target);
   const results = event.target;
+  console.log(event.target.innerHTML.split('PRICE: $')[1]);
   results.remove();
   totalPrice();
   saveCartItems();
@@ -46,13 +49,15 @@ function cartItemClickListener(event) {
 function createCartItemElement({ sku, name, salePrice }) {
   const cart = document.querySelector('.cart__items');
   const li = document.createElement('li');
-  const spanLi = document.createElement('span');
-  spanLi.innerText = salePrice;
-  spanLi.classList.add('spanNone');
+  // const spanLi = document.createElement('span');
+  const divLi = document.createElement('div');
+  // spanLi.innerText = salePrice;
+  // spanLi.classList.add('spanNone');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
-  li.appendChild(spanLi);
+  divLi.appendChild(li);
+  // divLi.appendChild(spanLi);
   cart.appendChild(li);
   totalPrice();
   saveCartItems();
