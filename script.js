@@ -67,7 +67,7 @@ function createCartItemElement({ sku, name, salePrice }) {
   // spanLi.innerText = salePrice;
   // spanLi.classList.add('spanNone');
   li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice} ronaldo`;
   li.addEventListener('click', cartItemClickListener);
   divLi.appendChild(li);
   // divLi.appendChild(spanLi);
